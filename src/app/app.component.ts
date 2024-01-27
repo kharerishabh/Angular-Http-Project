@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs';
+import { Post } from './post.model';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +17,7 @@ export class AppComponent implements OnInit {
     this.fetchPosts()
   }
 
-  onCreatePost(postData: { title: string; content: string }) {
+  onCreatePost(postData) {
     // Send Http request
     this.http
       .post(
@@ -41,8 +42,8 @@ export class AppComponent implements OnInit {
     this.http
       .get(
         'https://angular-project-563c1-default-rtdb.firebaseio.com/posts.json'
-      ).pipe(map((responseData) => {
-        const postsArray = [];
+      ).pipe(map((responseData: {[key: string]: Post}) => {
+        const postsArray: Post[] = [];
         for(const key in responseData){
           if(responseData.hasOwnProperty(key)){
             postsArray.push({...responseData[key], id: key})
@@ -50,6 +51,6 @@ export class AppComponent implements OnInit {
         }
         return postsArray
       }))
-      .subscribe((posts) => console.log(posts));
+      .subscribe((posts) => console.log(posts[0]));
   }
 }
