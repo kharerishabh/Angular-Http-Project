@@ -6,7 +6,9 @@ import { map } from "rxjs";
 
 @Injectable({providedIn: "root"})
 export class PostsService{
+
     constructor(private http: HttpClient){}
+    
     createAndStorePost(title: string, content: string){
         const postData: Post = {title: title, content: content} 
         this.http
@@ -32,5 +34,9 @@ export class PostsService{
         }
         return postsArray
       }))
+    }
+
+    deletePosts(){
+       return this.http.delete('https://angular-project-563c1-default-rtdb.firebaseio.com/posts.json')
     }
 }
