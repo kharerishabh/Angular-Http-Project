@@ -17,10 +17,10 @@ export class AppComponent implements OnInit {
     this.fetchPosts()
   }
 
-  onCreatePost(postData) {
+  onCreatePost(postData: Post) {
     // Send Http request
     this.http
-      .post(
+      .post<{name: string}>(
         'https://angular-project-563c1-default-rtdb.firebaseio.com/posts.json',
         postData
       )
@@ -40,9 +40,9 @@ export class AppComponent implements OnInit {
 
   private fetchPosts() {
     this.http
-      .get(
+      .get<{[key: string]: Post}>(
         'https://angular-project-563c1-default-rtdb.firebaseio.com/posts.json'
-      ).pipe(map((responseData: {[key: string]: Post}) => {
+      ).pipe(map((responseData) => {
         const postsArray: Post[] = [];
         for(const key in responseData){
           if(responseData.hasOwnProperty(key)){
@@ -51,6 +51,6 @@ export class AppComponent implements OnInit {
         }
         return postsArray
       }))
-      .subscribe((posts) => console.log(posts[0]));
+      .subscribe((posts) => console.log(posts));
   }
 }
