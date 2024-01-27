@@ -1,7 +1,8 @@
-import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
 import { Post } from "./post.model";
 import { map } from "rxjs";
+
 
 @Injectable({providedIn: "root"})
 export class PostsService{
@@ -19,7 +20,7 @@ export class PostsService{
     }
 
     fetchPosts(){
-        this.http
+       return this.http
       .get<{[key: string]: Post}>(
         'https://angular-project-563c1-default-rtdb.firebaseio.com/posts.json'
       ).pipe(map((responseData) => {
@@ -31,8 +32,5 @@ export class PostsService{
         }
         return postsArray
       }))
-      .subscribe((posts) =>{
-        
-      });
     }
 }
