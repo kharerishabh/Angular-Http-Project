@@ -3,6 +3,8 @@ import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/c
 export class AuthInterceptorService implements HttpInterceptor{
     intercept(req: HttpRequest<any>, next: HttpHandler) {
         console.log('Request its on its way')
-        return next.handle(req)
+        console.log(req.url)
+        const modifyRequest = req.clone({headers: req.headers.append('Auth', 'xyz')})
+        return next.handle(modifyRequest)
     }
 }
