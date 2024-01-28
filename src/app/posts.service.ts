@@ -15,7 +15,8 @@ export class PostsService {
       .post<{ name: string }>(
         'https://angular-project-563c1-default-rtdb.firebaseio.com/posts.json',
         postData, {
-          observe: 'response'
+          observe: 'response',
+          responseType: 'text'
         }
       )
       .subscribe(
@@ -37,7 +38,8 @@ export class PostsService {
         'https://angular-project-563c1-default-rtdb.firebaseio.com/posts.json',
         {
           headers: new HttpHeaders({ 'Custom-Header': 'Hello' }),
-          params: searchParams
+          params: searchParams,
+          responseType: 'text'
         }
       )
       .pipe(
